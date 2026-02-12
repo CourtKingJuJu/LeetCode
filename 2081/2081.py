@@ -1,3 +1,49 @@
+class Solution(object):
+    def kMirror(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: int
+        """
+
+        # Conver to base k
+        def convert(num):
+            converted = ''
+            while num != 0:
+                converted += str(num % k)
+                num //= k
+            return converted
+    
+        bsum = 0
+        length = 1
+        count = 0
+        
+        while count < n:
+            for i in range(10**(length-1), 10**length):
+                s = str(i)
+                num_str = s + s[:-1][::-1]
+                num = int(num_str)
+                basek_num = convert(num)
+                if basek_num == basek_num[::-1]:
+                    count += 1
+                    bsum += num
+                    if count == n: return bsum
+        
+            for i in range(10**(length-1), 10**length):
+                s = str(i)
+                num_str = s + s[::-1]
+                num = int(num_str)
+                basek_num = convert(num)
+                if basek_num == basek_num[::-1]:
+                    count += 1
+                    bsum += num
+                    if count == n: return bsum
+
+
+            length += 1
+
+        return bsum
+
 # First attempt, Issure runtime 
 '''
 class Solution(object):
